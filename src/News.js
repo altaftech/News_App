@@ -4,7 +4,7 @@ import NewsList from './NewsList';
 import load from './loading.gif'
 
 
-const News = ({ country, category }) => {
+const News = ({ category }) => {
     const [news, setNews] = useState([]);
 
     const capitalizeFirstLetter = (string) => {
@@ -13,11 +13,7 @@ const News = ({ country, category }) => {
 
     useEffect(() => {
       document.title = `${capitalizeFirstLetter(category)} - News`
-
-        axios.get(`https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=9ee7494e0f5c4c1a83c60499e0083747`)
-        // axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=9ee7494e0f5c4c1a83c60499e0083747`)
-        // axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=396183dbb9904a29b235d8be8d8dfbaf`)
-        // axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=c3ba725e55004e089c522ead9574b959`)
+        axios.get(`https://saurav.tech/NewsAPI/top-headlines/category/${category}/in.json`)
             .then(response => setNews(response.data.articles))
             .catch(error => console.error('Error fetching news:', error))
 
@@ -34,7 +30,7 @@ const News = ({ country, category }) => {
                 <div className="container">
                     <div className="row">
                         {news.map((value, index) => {
-                            return <div className="col-md-4" key={index}>
+                            return <div className="col-md-3" key={index}>
                                 <NewsList title={value.title} description={value.description} imageUrl={value.urlToImage} newsUrl={value.url} author={value.author} date={value.publishedAt} source={value.source.name} />
                             </div>
                         })}
